@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-md-4">
+		<h3>Categoria</h3>
+		<hr/>
+		<ul class="nav flex-column">
+			<% @categories.each do |category| %>
+				<li class="nav-item">
+			    	<a class="nav-link active" href="#"><%= category.name %></a>
+			  	</li>
+			<%end%>
+		</ul>
+	</div>
+	<div class="col-md-8">
+		<h3>Produtos</h3>
+		<hr/>
+		<div class="row">
+			<%= render partial:"layouts/products_block", locals: { products: @products, col_size: 4 } %>
+		</div>
+	</div>
+</div>
+
+		

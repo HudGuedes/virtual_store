@@ -1,0 +1,6 @@
+<h1><%= params[:term] %> <small>(<%= @products.count %> produtos encontrados)<small></h1>
+<hr/>
+
+<div class="row">
+	<%= render partial:"layouts/products_block", locals: { products: @products, col_size: 4 } %>
+</div>

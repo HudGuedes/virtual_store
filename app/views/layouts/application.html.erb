@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Virtual Store</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application' %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <header >
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <i class="fa fa-bank"></i> &nbsp;<strong>Virtual Store</strong>
+          </a>
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <%= link_to 'Home', root_path, class: 'nav-link' %>
+              </li>
+               <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categorias</a>
+                    <div class="dropdown-menu">
+                      <% @parent_categories.each do |category| %>
+                        <%= link_to category.name, category_path(category), class: 'dropdown-item'%>
+                      <% end %>
+                    </div>
+                  </li>
+            </ul>
+            <%= form_tag search_path, class:'form-inline', method: 'get' do %>
+              <%= text_field_tag(:term, params[:term], class: 'form-control mr-sm-2', placeholder: 'Produto, descrição ou categoria')%>
+              <%= submit_tag("Pesquisar", class: 'btn btn-outline-info my-2 my-sm-0') %>
+            <% end %>
+            &nbsp | &nbsp
+            <% if admin_user_signed_in? %>
+              <%= link_to "Sair", destroy_admin_user_session_path, method: :delete, class:'text-info' %>
+            <% else %>
+             <%= link_to "Entrar", new_admin_user_session_path, class:'text-info' %>
+            <% end %>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <article>
+      <div class="container">
+        <% flash.each do |type, msg| %>
+            <%= alert(msg, type == 'alert' ? 'danger' : 'info') %>
+          <% end %>
+        <%= yield %>
+      </div>
+    </article>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/ab1e64cbce.js"></script>
+</html>
